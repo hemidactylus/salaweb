@@ -17,9 +17,19 @@ from app import app, lm
 @app.route('/')
 @app.route('/index.html')
 def ep_index():
-    return render_template('index.html')
+    return render_template(
+        'index.html',
+        showmenu=False,
+    )
 
-@app.route('/a.html')
-def ep_test_ep():
-    return jsonify({'ciao':"pirla"})
+@app.route('/public')
+def ep_public():
+    return render_template(
+        'itemlist.html',
+        showmenu=True,
+    )
 
+@app.route('/ubq')
+@app.route('/biblio')
+def ep_webapp_placeholder():
+    return jsonify({'temp':'should_point_to_webapp'})

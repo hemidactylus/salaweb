@@ -40,34 +40,38 @@
 {% endblock %}
 
     <body>
-        <div id="wrapper">
+        <div id="wrapper"
+            {% if showmenu %}
+                class="toggled"
+            {% endif %}
+        >
             {% block sidebar %}
                 <!-- Sidebar -->
                 <div id="sidebar-wrapper">
                     <ul class="sidebar-nav">
-                        <li class="sidebar-brand">
+                        <li class="sidebar-brand" style="margin-top: 10px;">
                             <a href="index.html">
                                 <img src="/static/salaWeb/images/salamandrina_w.svg" alt="Logo" height=50px>
                                 Home
                             </a>
                         </li>
                         <li>
-                            <a href="a.html">UBIQueue</a>
+                            <a href="ubq">UBIQueue</a>
                         </li>
                         <li>
-                            <a href="#">BiblioMansarda</a>
+                            <a href="biblio">BiblioMansarda</a>
                         </li>
                         <li>
-                            <a href="#">Public resources</a>
+                            <a href="{{ url_for('ep_public') }}">Public resources</a>
                         </li>
                         <li>
-                            <a href="#">Private lockers</a>
+                            <a href="private">Private lockers</a>
                         </li>
                         <li>
                             <a href="#">About</a>
                         </li>
                         <li>
-                            <a href="#">Contacs</a>
+                            <a href="#">Contact</a>
                         </li>
                     </ul>
                 </div>
