@@ -1,0 +1,12 @@
+{
+    "title": "Public resources",
+    "subtitle": "Miscellaneous directories free for anyone to access.",
+    "itemlist": [
+        {
+            "picture": "IMAGE.jpg", 
+            "link": "STATIC_ACCESSIBLE_LINK_OR_ENDPOINT", 
+            "name": "NAME", 
+            "description": "DESCRIPTION"
+        }
+    ]
+}

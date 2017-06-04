@@ -13,23 +13,43 @@ from flask import (
 )
 
 from app import app, lm
+from app.contentlib.contentlib import loadContents
+
+from config import CONTENTS_DESCRIPTOR_DIRECTORY
 
 @app.route('/')
 @app.route('/index.html')
 def ep_index():
     return render_template(
         'index.html',
-        showmenu=False,
+        hidemenu=True,
     )
 
-@app.route('/public')
-def ep_public():
+@app.route('/content/<fname>')
+def ep_content(fname):
+    #
+    jsonName='%s.json' % fname
+    contentStruct=loadContents(
+        CONTENTS_DESCRIPTOR_DIRECTORY,
+        jsonName,
+    )
+    #
+    if contentStruct=={}:
+        contentStruct={
+            'title': 'Empty folder',
+            'subtitle': 'The requested resource is empty or non-existing.',
+        }
+    #
     return render_template(
         'itemlist.html',
-        showmenu=True,
+        contents=contentStruct,
+        hidemenu=False,
     )
 
 @app.route('/ubq')
+def ep_webapp_ubq():
+    return redirect('/ubq')
+
 @app.route('/biblio')
-def ep_webapp_placeholder():
-    return jsonify({'temp':'should_point_to_webapp'})
+def ep_webapp_biblio():
+    return redirect('/biblio')

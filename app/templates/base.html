@@ -41,7 +41,9 @@
 
     <body>
         <div id="wrapper"
-            {% if showmenu %}
+            {% if hidemenu %}
+
+            {% else %}
                 class="toggled"
             {% endif %}
         >
@@ -55,17 +57,23 @@
                                 Home
                             </a>
                         </li>
-                        <li>
-                            <a href="ubq">UBIQueue</a>
+                       <li>
+                            <a href="ubq">
+                                <img src="/static/ubq/images/logo1.svg" height=32px>
+                                UBIQueue
+                            </a>
                         </li>
                         <li>
-                            <a href="biblio">BiblioMansarda</a>
+                            <a href="biblio">
+                                <img src="/static/biblio/images/library.png" height=32px>
+                                BiblioMansarda
+                            </a>
                         </li>
                         <li>
-                            <a href="{{ url_for('ep_public') }}">Public resources</a>
+                            <a href="{{ url_for('ep_content', fname='public') }}">Public resources</a>
                         </li>
                         <li>
-                            <a href="private">Private lockers</a>
+                            <a href="{{ url_for('ep_content', fname='private') }}">Private lockers</a>
                         </li>
                         <li>
                             <a href="#">About</a>

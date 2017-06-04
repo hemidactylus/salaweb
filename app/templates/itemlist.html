@@ -2,10 +2,37 @@
 
 {% block content %}
     <div class="jumbotron">
-        <div class="row">
-            <div class="col-sm-4">
-                Public!
+        <h2>
+            {{ contents.title }}
+        </h2>
+        <p>
+            {{ contents.subtitle }}
+        </p>
+        {% for item in contents.itemlist %}
+            <hr>
+            <div class="row">
+                <div class="col-sm-4">
+                    {% if item.picture %}
+                        <a href="{{ item.link }}">
+                            <img src="/static/dynamic_contents/{{ item.picture }}" width=50%/>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <b>
+                                <a href="{{ item.link }}">
+                                    {{ item.name }}
+                                </a>
+                            </b>
+                        </div>
+                        <div class="col-sm-12">
+                            {{ item.description }}
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}
