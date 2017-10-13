@@ -3,3 +3,4 @@ __pycache__
 *.json
 *.csv
 sensible_config.py
+app/contentlib/menuItems.py

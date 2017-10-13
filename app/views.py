@@ -14,6 +14,7 @@ from flask import (
 
 from app import app, lm
 from app.contentlib.contentlib import loadContents
+from app.contentlib.menuItems import menuItems
 
 from config import CONTENTS_DESCRIPTOR_DIRECTORY
 
@@ -23,6 +24,7 @@ def ep_index():
     return render_template(
         'index.html',
         hidemenu=True,
+        menuItems=menuItems,
     )
 
 @app.route('/content/<fname>')
@@ -44,6 +46,7 @@ def ep_content(fname):
         'itemlist.html',
         contents=contentStruct,
         hidemenu=False,
+        menuItems=menuItems,
     )
 
 @app.route('/ubq')

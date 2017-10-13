@@ -57,18 +57,14 @@
                                 Home
                             </a>
                         </li>
-                       <li>
-                            <a href="/ubq">
-                                <img src="/static/ubq/images/logo1.svg" height=32px>
-                                UBIQueue
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/biblio">
-                                <img src="/static/biblio/images/library.png" height=32px>
-                                BiblioMansarda
-                            </a>
-                        </li>
+                        {% for mItem in menuItems %}
+                            <li>
+                                <a href="{{ mItem.href }}">
+                                    <img src="{{ mItem.image }}" height=32px>
+                                    {{ mItem.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
                         <li>
                             <a href="{{ url_for('ep_content', fname='public') }}">Public resources</a>
                         </li>
