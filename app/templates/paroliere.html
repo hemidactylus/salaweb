@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block othercss %}
+    <link href="/static/salaWeb/css/paroliere.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h2>
+            {{ contents.title }}
+        </h2>
+        <p>
+            {{ contents.subtitle }}
+        </p>
+        <p>
+            <div align="center">
+                <table>
+                    {% for letrow in letpack %}
+                        <tr>
+                            {% for lett in letrow %}
+                                <td>
+                                    <div class="content">
+                                        {{ lett }}
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div align="center" style="margin-top: 12px;">
+                <p align="center" id="timer" style="width: 8%; border: 1px solid black; background-color: white">
+                    00:00
+                </p>
+                <span id="reset" style="background-color: orange; color: red;">
+                    Azzera
+                </span>
+            </div>
+        </p>
+        <p>
+            <a href="{{ url_for('ep_paroliere') }}">Lancia i dadi</a>
+        </p>
+    </div>
+    <script>
+        function pad(num, size) {
+            var s = num+"";
+            while (s.length < size) s = "0" + s;
+            return s;
+        }
+        var formatTime=function(fulltime){
+            var minutes = Math.floor(fulltime / 60);
+            var seconds = fulltime % 60;
+            return pad(minutes,2) + ':' + pad(seconds,2);
+        }
+
+        var timer=0;
+        timer_is_on=false;
+        timerElement=document.getElementById('timer')
+        // https://stackoverflow.com/questions/5767022/javascript-timer
+        function displayCount() {
+            timerElement.innerText=formatTime(timer);
+        }
+
+        function count() {
+            if(timer_is_on) {
+                timer=timer+1;
+                displayCount();
+            }
+        }
+        var interval = setInterval(count,1000);
+
+        window.onload = function() {
+            timer_is_on=true;
+            $( "#reset" ).on( "click", function() {
+              timer=0;
+              displayCount();
+              return;
+              // https://stackoverflow.com/questions/40291133/dollar-is-not-defined
+            });
+        };
+    </script>
+{% endblock %}

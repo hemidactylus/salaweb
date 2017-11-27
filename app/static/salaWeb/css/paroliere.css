@@ -1,0 +1,33 @@
+table {
+  width: 36%;
+  border: 9px solid orange;
+  border-radius:6px;
+  -moz-border-radius:6px;
+  border-collapse:separate;
+}
+td {
+  width: 18%;
+  position: relative;
+  border: 5px solid orange;
+}
+td:after {
+  content: '';
+  display: block;
+  margin-top: 100%;
+}
+td .content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  font-size: 350%;
+  display:table-cell;
+  vertical-align:middle;
+}
+
+/*http://jsfiddle.net/webtiki/kQXkt/*/

@@ -18,6 +18,8 @@ from app.contentlib.menuItems import menuItems
 
 from config import CONTENTS_DESCRIPTOR_DIRECTORY
 
+from app.utilityEndpoints import ep_paroliere
+
 @app.route('/')
 @app.route('/index.html')
 def ep_index():
