@@ -7,3 +7,5 @@ app/contentlib/menuItems.py
 app/static/biblio
 app/static/dynamic_contents/
 app/static/ubq
+app/userspace/dbValues.py
+

@@ -8,3 +8,7 @@ WTF_CSRF_ENABLED = True
 from sensible_config import SECRET_KEY
 
 from sensible_config import CONTENTS_DESCRIPTOR_DIRECTORY
+
+# database location
+DB_NAME='salaweb.db'
+dbFullName=os.path.join(basedir,'app','database',DB_NAME)
