@@ -23,6 +23,7 @@ from app.utils.paroliere import deal
 
 @app.route('/paroliere')
 def ep_paroliere():
+    user=g.user
     letters=[
         let if let!='Q' else 'Qu'
         for let in deal()
@@ -36,7 +37,9 @@ def ep_paroliere():
         title='Paroliere',
         caption='Play with this!',
         letpack=letpack,
+        hidemenu=False,
         menuItems=menuItems,
+        user=user,
         contents={
             'title': 'Paroliere',
             'subtitle': 'Gioca a Paroliere online',

@@ -74,6 +74,15 @@
                         <li>
                             <a href="{{ url_for('ep_content', fname='private') }}">Private lockers</a>
                         </li>
+                        {% if user.is_authenticated %}
+                            <li>
+                                <a href="{{ url_for('ep_login') }}">(logout as {{ user.username }})</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="{{ url_for('ep_login') }}">Login</a>
+                            </li>
+                        {% endif %}
                         <li>
                             <a href="#">About</a>
                         </li>
@@ -87,8 +96,23 @@
 
             <div id="page-content-wrapper">
                 <div class="container-fluid">
-                    {% block content %}
-                    {% endblock %}
+                    <div class="jumbotron">
+                        {% if user.is_authenticated %}
+                            <div class="row">
+                                User {{ user.username }}
+                                <span style="font-size: 80%;">
+                                    <a href="{{ url_for('ep_logout') }}">(logout)</a>
+                                </span>
+                            </div>
+                        {% endif %}
+                        {% for message in get_flashed_messages() %}
+                            <div style="color: blue;">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {% block content %}
+                        {% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
