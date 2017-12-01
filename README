@@ -1,0 +1,15 @@
+README
+
+To do:
+
+    * various types of content: href, endpoint, directory.
+
+        directory = a check is done on the role configured for that directory
+        (NEVER static files through lighty)
+        (default role=admin only TO DO!)
+        (a special role='' is anybody)
+
+        The descriptors' roles are a plus: what counts are the role in the dirs and the decorator in the endpoint
+
+        Also, careful with the superdir escalation tricks
+

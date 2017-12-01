@@ -1,3 +1,10 @@
+'''
+    views.py : endpoints for the app
+'''
+
+from functools import wraps
+import os
+
 from flask import (
     render_template,
     flash,
@@ -10,6 +17,7 @@ from flask import (
     escape,
     make_response,
     jsonify,
+    send_from_directory,
 )
 from flask_login import  (
     login_user,
@@ -20,7 +28,11 @@ from flask_login import  (
 from markupsafe import Markup
 
 from app import app, lm
-from app.contentlib.contentlib import loadContents
+from app.contentlib.contentlib import (
+    loadContents,
+    prepareItems,
+    getRoles,
+)
 from app.contentlib.menuItems import menuItems
 
 from app.userspace.models import (
@@ -33,6 +45,21 @@ from app.userspace.dbtools import (
     dbGetUser,
     dbOpenDatabase,
 )
+from app.utils.fileHandling import (
+    pathLeadingPart,
+    getRole,
+)
+
+def requiresRole(role):
+    def role_requiror(f,_r=role):
+        @wraps(f)
+        def decorated_function(_r=_r,*args, **kwargs):
+            if _r not in getRoles(g.user):
+                abort(404)
+            else:
+                return f(*args, **kwargs)
+        return decorated_function
+    return role_requiror
 
 import config
 
@@ -65,7 +92,7 @@ def ep_index(hidemenu=1):
     return render_template(
         'index.html',
         hidemenu=bool(hidemenu),
-        menuItems=menuItems,
+        menuItems=prepareItems(user,menuItems),
         user=user,
     )
 
@@ -73,7 +100,7 @@ def ep_index(hidemenu=1):
 @login_required
 def ep_logout():
     if g.user is not None and g.user.is_authenticated:
-        flashMessage('Logged out','farewell')
+        flashMessage('Logged out','farewell, %s.' % g.user.fullname)
         logout_user()
     return redirect(url_for('ep_index',hidemenu=0))        
 
@@ -100,7 +127,7 @@ def ep_login():
     return render_template(
         'login.html', 
         hidemenu=False,
-        menuItems=menuItems,
+        menuItems=prepareItems(user,menuItems),
         form=form,
         user=user,
         contents={
@@ -109,12 +136,41 @@ def ep_login():
         },
     )
 
+@app.route('/directory/<path:relpath>')
+def ep_directory(relpath):
+    # here public/private paths are treated
+    # and files are served if certain conditions are met
+    # (check on a role that is configured in the directory)
+    user=g.user
+    fullName=os.path.join(config.SERVABLE_DIRECTORIES_LOCATION,relpath)
+    if os.path.exists(fullName):
+        # determine main subdir and the associated role
+        thisRole=getRole(
+            os.path.join(
+                config.SERVABLE_DIRECTORIES_LOCATION,
+                pathLeadingPart(relpath),
+            )
+        )
+        if thisRole is None or thisRole in getRoles(user):
+            # is it a file or a directory?
+            if os.path.isdir(fullName):
+                # here the full dir page shall be created (nice)
+                return ' / '.join(os.listdir(fullName))
+            else:
+                # return the file as it is
+                return send_from_directory(*os.path.split(fullName))
+        else:
+            abort(404)
+    else:
+        abort(404)
+
 @app.route('/content/<fname>')
 def ep_content(fname):
     user=g.user
     #
     jsonName='%s.json' % fname
     contentStruct=loadContents(
+        user,
         config.CONTENTS_DESCRIPTOR_DIRECTORY,
         jsonName,
     )
@@ -130,7 +186,7 @@ def ep_content(fname):
         contents=contentStruct,
         hidemenu=False,
         user=user,
-        menuItems=menuItems,
+        menuItems=prepareItems(user,menuItems),
     )
 
 @app.route('/ubq')

@@ -39,6 +39,12 @@ class User(dictableObject):
         if _kwargs:
             raise ValueError('Unknown argument(s): %s' % ', '.join(_kwargs.keys()))
 
+    def roleSet(self):
+        return set(self.roles.split(','))
+
+    def hasRole(self,rolename):
+        return rolename in self.roleSet()
+
     @staticmethod
     def _hashString(message):
         return hashlib.sha256(message.encode()).hexdigest()

@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-4">
                 {% if item.picture %}
-                    <a href="{{ item.link }}">
+                    <a href="{{ item.href }}">
                         <img src="/static/dynamic_contents/{{ item.picture }}" width=50%/>
                     </a>
                 {% endif %}
@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <b>
-                            <a href="{{ item.link }}">
+                            <a href="{{ item.href }}">
                                 {{ item.name }}
                             </a>
                         </b>

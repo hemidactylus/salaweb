@@ -62,17 +62,13 @@
                         {% for mItem in menuItems %}
                             <li>
                                 <a href="{{ mItem.href }}">
-                                    <img src="{{ mItem.image }}" height=32px>
+                                    {% if mItem.image %}
+                                        <img src="{{ mItem.image }}" height=32px>
+                                    {% endif %}
                                     {{ mItem.name }}
                                 </a>
                             </li>
                         {% endfor %}
-                        <li>
-                            <a href="{{ url_for('ep_content', fname='public') }}">Public resources</a>
-                        </li>
-                        <li>
-                            <a href="{{ url_for('ep_content', fname='private') }}">Private lockers</a>
-                        </li>
                         {% if user.is_authenticated %}
                             <li>
                                 <a href="{{ url_for('ep_logout') }}">logout (as {{ user.username }})</a>
@@ -116,6 +112,14 @@
                     <a href="#menu-toggle" id="menu-toggle-footer">
                         <img src="/static/salaWeb/images/salamandrina.svg" alt="Logo" height=30px>
                     </a>
+                    <span style="padding-left: 15px;">
+                        {% if user.is_authenticated %}
+                            {{ user.fullname }} -
+                            <a href="{{ url_for('ep_logout') }}" style="color: #333; text-decoration: none;">
+                                (logout)
+                            </a>
+                        {% endif %}
+                    </span>
                   </small>
               </div>
             </nav>
