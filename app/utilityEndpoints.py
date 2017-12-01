@@ -37,7 +37,7 @@ def ep_paroliere():
         title='Paroliere',
         caption='Play with this!',
         letpack=letpack,
-        hidemenu=False,
+        hidemenu=True,
         menuItems=menuItems,
         user=user,
         contents={

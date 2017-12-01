@@ -51,7 +51,6 @@
             {% endif %}
         >
             {% block sidebar %}
-                <!-- Sidebar -->
                 <div id="sidebar-wrapper">
                     <ul class="sidebar-nav">
                         <li class="sidebar-brand" style="margin-top: 10px;">
@@ -76,40 +75,27 @@
                         </li>
                         {% if user.is_authenticated %}
                             <li>
-                                <a href="{{ url_for('ep_login') }}">(logout as {{ user.username }})</a>
+                                <a href="{{ url_for('ep_logout') }}">logout (as {{ user.username }})</a>
                             </li>
                         {% else %}
                             <li>
                                 <a href="{{ url_for('ep_login') }}">Login</a>
                             </li>
                         {% endif %}
-                        <li>
-                            <a href="#">About</a>
-                        </li>
-                        <li>
-                            <a href="#">Contact</a>
-                        </li>
                     </ul>
                 </div>
-                <!-- /#sidebar-wrapper -->
             {% endblock %}
 
             <div id="page-content-wrapper">
                 <div class="container-fluid">
-                    <div class="jumbotron">
-                        {% if user.is_authenticated %}
-                            <div class="row">
-                                User {{ user.username }}
-                                <span style="font-size: 80%;">
-                                    <a href="{{ url_for('ep_logout') }}">(logout)</a>
-                                </span>
-                            </div>
-                        {% endif %}
-                        {% for message in get_flashed_messages() %}
-                            <div style="color: blue;">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
+                    {% for message in get_flashed_messages() %}
+                     <div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px;">
+                        <div class="row" style="color: blue;">
+                            {{ message }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="jumbotron" style="padding-top: 10px;">
                         {% block content %}
                         {% endblock %}
                     </div>
@@ -123,24 +109,29 @@
         <!-- Bootstrap Core JavaScript -->
         <script src="/static/salaWeb/js/bootstrap.min.js"></script>
 
+        {% block footer %}
+            <nav class="navbar navbar-default navbar-fixed-bottom footer-colors" style="height: 50px;">
+              <div class="container" align="center" style="margin-top: 15px;">
+                  <small>
+                    <a href="#menu-toggle" id="menu-toggle-footer">
+                        <img src="/static/salaWeb/images/salamandrina.svg" alt="Logo" height=30px>
+                    </a>
+                  </small>
+              </div>
+            </nav>
+        {% endblock %}
+
         <!-- Menu Toggle Script -->
         <script>
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
+        $("#menu-toggle-footer").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
         </script>
 
-        {% block footer %}
-        <nav class="navbar navbar-default navbar-fixed-bottom footer-colors" style="height: 80px;">
-          <div class="container" align="center" style="margin-top: 15px;">
-              <small>
-                <img src="/static/salaWeb/images/salamandrina.svg" alt="Logo" height=50px>
-                Salamandrina
-              </small>
-          </div>
-        </nav>
-
-        {% endblock %}
     </body>
 </html>
