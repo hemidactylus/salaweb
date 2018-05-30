@@ -18,6 +18,8 @@ from app.contentlib.menuItems import menuItems
 
 from config import CONTENTS_DESCRIPTOR_DIRECTORY
 
+from app.privacy_policy import privacy_policy
+
 from app.utilityEndpoints import ep_paroliere
 
 @app.route('/')
@@ -58,3 +60,11 @@ def ep_webapp_ubq():
 @app.route('/biblio')
 def ep_webapp_biblio():
     return redirect('/biblio')
+
+@app.route('/privacy')
+def ep_privacy():
+    return render_template(
+        'privacy.html',
+        menuItems=menuItems,
+        **privacy_policy,
+    )

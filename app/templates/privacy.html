@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h2>
+            {{ title }}
+        </h2>
+        <p>
+            {{ subtitle }}
+        </p>
+        {% for par in paragraphs %}
+            {% if par.type == 'par' %}
+              <h3>
+                {{ par.title }}
+              </h3>
+              <p>
+                {{ par.body }}
+              </p>
+            {% endif %}
+            {% if par.type == 'img' %}
+              <p align="center">
+                <img src="static/biblio/images/{{ par.image }}" height="{{ par.height }}"/>
+              </p>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
